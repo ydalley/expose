@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Expose Demo</title>
+
+<!-- Bootstrap -->
+<link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+<!-- Font Awesome -->
+<link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+<!-- Animate.css -->
+<link th:href="@{/css/animate.min.css}" rel="stylesheet">
+<!-- Pnotify.css -->
+<link th:href="@{/vendors/pnotify/dist/pnotify.css}" rel="stylesheet">
+<!-- Custom Theme Style -->
+<link th:href="@{/css/custom.min.css}" rel="stylesheet">
+</head>
+
+<body class="login">
+<div class="login_wrapper">
+		<div  class="animate form login_form">
+			<section class="login_content">
+				<form method="post" th:action="@{/register}" th:object="${info}">
+					<div hidden="hidden">
+						<ul id="fieldErrors" th:if="${#fields.hasErrors('*')}">
+							<li th:each="e : ${#fields.detailedErrors()}" th:text="${e.global}? '*' : ${e.fieldName}"></li>
+						</ul>
+					</div>
+					<div hidden="hidden">
+						<ul id="fieldMessages" th:if="${#fields.hasErrors('*')}">
+							<li th:each="e : ${#fields.detailedErrors()}" th:attr="field=${e.fieldName}" th:text="${e.message}"></li>
+						</ul>
+					</div>
+					<h1>Create Account</h1>
+					<div>
+						<input type="email" class="form-control" th:field="*{email}" placeholder="Email" required />
+					</div>
+					<div>
+						<input type="text" class="form-control" th:field="*{firstName}" placeholder="First Name" required />
+					</div>
+					<div>
+						<input type="text" class="form-control" th:field="*{lastName}" placeholder="Last Name" required />
+					</div>
+					<div>
+						<input type="text" class="form-control" th:field="*{phone}" placeholder="Phone" required />
+					</div>
+					<div>
+						<input type="password" class="form-control" th:field="*{password}" placeholder="Password" required />
+					</div>
+					<div>
+						<button class="btn btn-default submit" type="submit">Register</button>
+					</div>
+
+					<div class="clearfix"></div>
+
+					<div class="separator">
+						<p class="change_link">
+							Already a member ? <a th:href="@{/login}" class="to_register"> Log in </a>
+						</p>
+
+						<div class="clearfix"></div>
+						<br />
+
+					</div>
+				</form>
+			</section>
+		</div>
+</div>
+	<div hidden="hidden">
+		<ul id="messages">
+			<li th:if="${message != null}" th:text="${message}"></li>
+		</ul>
+	</div>
+	<div hidden="hidden">
+		<ul id="errors">
+			<li th:if="${error != null}" th:text="${error}"></li>
+		</ul>
+	</div>
+	<script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+	<script th:src="@{/vendors/pnotify/dist/pnotify.js}"></script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		$(document).ready(function() {
+			initnotices();
+		});
+		
+		function initnotices() {
+
+			$("#fieldErrors li").each(
+					function(index, value) {
+						var tt = $(this).text();
+						$("[name='" + tt + "']").closest(".form-group")
+								.addClass("has-error");
+					});
+
+			$('#messages li').each(function(index, value) {
+				tt = $(this).text();
+				new PNotify({
+					text : tt,
+					type : 'success'
+				});
+			});
+
+			$('#fieldMessages li').each(function(index, value) {
+				field = $(this).attr("field");
+				label = $('label[for=' + field + ']').text();
+				tt = $(this).text();
+				new PNotify({
+					title : 'Error',
+					text : label + ' ' + tt,
+					type : 'error'
+				});
+			});
+
+			$('#errors li').each(function(index, value) {
+				var tt = $(this).text();
+				new PNotify({
+					title : 'Error',
+					text : tt,
+					type : 'error'
+				});
+			});
+		}
+		/*]]>*/
+	</script>
+
+
+</body>
+</html>

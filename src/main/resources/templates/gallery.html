@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+
+<head>
+
+<title>Gallery</title>
+<link th:href="@{/vendors/sweetalert2/dist/sweetalert2.css}" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+	<div class="row" layout:fragment="content">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="x_panel">
+				<div class="x_title">
+					<h2>Galley Page</h2>
+					<ul class="nav navbar-right panel_toolbox">
+						<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+						<li><a class="close-link"><i class="fa fa-close"></i></a></li>
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<div class="row">
+						<div class="col-md-55" th:each="info: ${infos}">
+							<div class="thumbnail">
+								<div class="image view view-first">
+									<img style="width: 100%; display: block;" th:src="${'data:image/png;base64,'}" th:alt="${info.name}" />
+									<div class="mask">
+										<p>View</p>
+										<div class="tools tools-bottom">
+											<a href="#" class="imagelink"  th:attr="pid=${info.id},pname=${info.name}"><i class="fa fa-eye"></i></a>
+										</div>
+									</div>
+								</div>
+								<div class="caption">
+									<p th:text="${info.name}"></p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<th:block layout:fragment="scripts">
+		<script th:src="@{/vendors/sweetalert2/dist/sweetalert2.js}"></script>
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			$(document).ready(function() {
+				$(".imagelink").on("click", function(e) {
+					e.preventDefault();
+					link = $(e.currentTarget);
+					pid = link.attr("pid");
+					pname = link.attr("pname");
+					$.ajax({
+						type : "GET",
+						url : "gallery/info/" + pid,
+						success : function(result) {
+							swal({
+								title : pname,
+								imageUrl : 'data:image/jpeg;base64,' + result,
+								imageWidth : 400,
+								imageHeight : 200,
+								animation : false
+							});
+						},
+						error : function(result) {
+							swal('Oops...', 'Something went wrong!', 'error');
+						}
+					});
+
+				});
+
+			});
+			/*]]>*/
+		</script>
+	</th:block>
+</body>
+</html>

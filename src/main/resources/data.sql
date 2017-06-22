@@ -1,0 +1,1 @@
+INSERT INTO `user` (`id`, `email`, `expiry_date`, `first_name`, `last_name`, `login_id`, `password`, `phone`, `status`) VALUES (1,'seunolaosebikan@ymail.com','2016-11-20 16:10:03','Seun','Olaseikan','oseun','8f9e2ea6d58d4e526a34ad46c19eb296c7c09c2b42583e1deee20c0a3fd595e4','13163009020','E');

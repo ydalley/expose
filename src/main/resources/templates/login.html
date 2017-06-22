@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Expose Demo</title>
+
+<!-- Bootstrap -->
+<link th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet">
+<!-- Font Awesome -->
+<link th:href="@{/vendors/font-awesome/css/font-awesome.min.css}" rel="stylesheet">
+<!-- Animate.css -->
+<link th:href="@{/css/animate.min.css}" rel="stylesheet">
+<!-- Pnotify.css -->
+<link th:href="@{/vendors/pnotify/dist/pnotify.css}" rel="stylesheet">
+<!-- Custom Theme Style -->
+<link th:href="@{/css/custom.min.css}" rel="stylesheet">
+</head>
+
+<body class="login">
+	<div>
+
+		<div class="login_wrapper">
+			<div class="animate form login_form">
+				<section class="login_content">
+					<form method="post">
+						<h1>Login Form</h1>
+						<div>
+							<input type="text" class="form-control" name="username" placeholder="Email" required />
+						</div>
+						<div>
+							<input type="password" class="form-control" name="password" placeholder="Password" required />
+						</div>
+						<div>
+							<button class="btn btn-default submit" type="submit">Login</button>
+							<a class="reset_pass" href="#">Lost your password?</a>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<div class="separator">
+							<p class="change_link">
+								New to site? <a th:href="@{/signup}" class="to_register"> Create Account </a>
+							</p>
+
+							<div class="clearfix"></div>
+							<br />
+
+						</div>
+					</form>
+				</section>
+			</div>
+
+			
+		</div>
+		<div hidden="hidden">
+			<ul id="messages">
+				<li th:if="${message != null}" th:text="${message}"></li>
+			</ul>
+		</div>
+		<th:block th:if="${shiroLoginFailure != null}">
+		<div hidden="hidden">
+			<ul id="errors" th:switch="${shiroLoginFailure}">
+				<li th:case="'org.apache.shiro.authc.IncorrectCredentialsException'" th:text="'Wrong Credentials provided'">WCP</li>
+				<li th:case="'org.apache.shiro.authc.AuthenticationException'" th:text="'Unknown Credentials provided'">UCP</li>
+				<li th:case="*" th:text="'Unknown error'">U</li>
+			</ul>
+		</div>
+	</th:block>
+	</div>
+	<script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+	<script th:src="@{/vendors/pnotify/dist/pnotify.js}"></script>
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		$(document).ready(function() {
+			initnotices();
+		});
+		 function initnotices(){
+			
+			$('#messages li').each(function(index, value) {
+				tt = $(this).text();
+				new PNotify({
+				    text: tt,
+				    type: 'success'
+				});
+			});
+			$('#errors li').each(function(index, value) {
+				var tt = $(this).text();
+				 new PNotify({
+					    title: 'Error',
+					    text: tt,
+					    type: 'error'
+				});
+			});
+		}
+		/*]]>*/
+	</script>
+
+
+</body>
+</html>
