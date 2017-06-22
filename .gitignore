@@ -8,13 +8,11 @@ target/
 .project
 .settings
 .springBeans
-
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
-
 ### NetBeans ###
 nbproject/private/
 build/
@@ -23,3 +21,6 @@ dist/
 nbdist/
 .nb-gradle/
 .DS_Store
+target
+.settings/*
+!.settings/.jsdtscope
