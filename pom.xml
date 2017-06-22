@@ -25,7 +25,8 @@
 		<thymeleaf-shiro.version>2.0.0</thymeleaf-shiro.version>
 		<thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
 		<tomcat.version>8.5.15</tomcat.version>
-	</properties>
+		<maven.test.skip>true</maven.test.skip>
+</properties>
 
 	<dependencies>
 		<dependency>
